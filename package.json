@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^1.1.15",
+    "@ant-design/icons-react": "^1.1.2",
     "lodash": "^4.17.11",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
-    "react-scripts-ts": "3.1.0"
+    "react-scripts-ts": "^4.0.8"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -16,14 +18,26 @@
   },
   "devDependencies": {
     "@types/jest": "^23.3.9",
+    "@types/lodash": "^4.14.118",
     "@types/node": "^10.12.5",
     "@types/react": "^16.7.3",
     "@types/react-dom": "^16.0.9",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "enzyme-to-json": "^3.3.4",
+    "node-sass": "^4.10.0",
+    "react-test-renderer": "^16.6.0",
     "typescript": "^3.1.6"
   },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
