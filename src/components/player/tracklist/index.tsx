@@ -18,6 +18,7 @@ const Tracklist: StatelessComponent<TracklistProps> = function Tracklist({
     <div className="tracklist">
       {tracks.map((track, idx) => {
         const isSelected = selectedTrack.id === track.id;
+        console.log(isSelected);
         return (
           <Track
             key={idx}

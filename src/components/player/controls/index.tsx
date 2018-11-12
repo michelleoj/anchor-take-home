@@ -1,7 +1,7 @@
 import React, { StatelessComponent, Props } from 'react';
 import {
-  VerticalLeftOutline,
-  VerticalRightOutline,
+  ForwardOutline,
+  BackwardOutline,
   PauseCircleOutline,
   PlayCircleOutline
 } from '@ant-design/icons';
@@ -21,20 +21,31 @@ const Controls: StatelessComponent<ControlsProps> = function Controls({
   onForwardClick,
   isPlaying
 }) {
+  const iconStyles = {
+    color: 'white',
+    width: '2em',
+    height: '2em'
+  };
   return (
     <div className="controls">
       <div className="back" onClick={onBackClick}>
-        <AntdIcon type={VerticalRightOutline} />
+        <AntdIcon type={BackwardOutline} style={iconStyles} />
       </div>
       <div className="playPause" onClick={onPlayPauseClick}>
         {isPlaying ? (
-          <AntdIcon type={PauseCircleOutline} />
+          <AntdIcon
+            type={PauseCircleOutline}
+            style={{ ...iconStyles, width: '3em', height: '3em' }}
+          />
         ) : (
-          <AntdIcon type={PlayCircleOutline} />
+          <AntdIcon
+            type={PlayCircleOutline}
+            style={{ ...iconStyles, width: '3em', height: '3em' }}
+          />
         )}
       </div>
       <div className="forward" onClick={onForwardClick}>
-        <AntdIcon type={VerticalLeftOutline} />
+        <AntdIcon type={ForwardOutline} style={iconStyles} />
       </div>
     </div>
   );

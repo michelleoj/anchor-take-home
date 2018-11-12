@@ -18,8 +18,10 @@ const Track: StatelessComponent<TrackProps> = function Track({
   };
 
   return (
-    <div className="track" onClick={onClickHandler}>
-      {isSelected && <div className="selected" />}
+    <div
+      className={`track ${isSelected ? 'isSelected' : ''}`}
+      onClick={onClickHandler}
+    >
       <div className="title">{track.title}</div>
       <div className="mediaArt">
         <img src={track.imageUrl} />

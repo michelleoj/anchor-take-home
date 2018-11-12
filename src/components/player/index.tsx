@@ -39,7 +39,7 @@ class Player extends Component {
 
   public onTrackClick = track => {
     this.setState({
-      selectedTrack: track
+      selectedTrackId: track.id
     });
   };
 
@@ -52,30 +52,58 @@ class Player extends Component {
 
   public onBackClick = () => {
     console.log('back!');
+    this.setState({
+      selectedTrackId: this.getSelectedIndex(this.state.selectedTrackId - 1)
+    });
   };
 
   public onForwardClick = () => {
     console.log('forward!');
+    this.setState({
+      selectedTrackId: this.getSelectedIndex(this.state.selectedTrackId + 1)
+    });
+  };
+
+  public getSelectedIndex = i => {
+    const n = this.state.tracks.length;
+    return ((i % n) + n) % n;
   };
 
   public render() {
     const { tracks, selectedTrackId, isPlaying } = this.state;
+    const selectedTrack = tracks[selectedTrackId];
+    console.log(selectedTrack, selectedTrackId, tracks);
     return isEmpty(tracks) ? (
       <div className="loading">Loading...</div>
     ) : (
       <div className="player">
-        <Playback track={tracks[selectedTrackId]} />
-        <Controls
-          onPlayPauseClick={this.onPlayPauseClick}
-          onBackClick={this.onBackClick}
-          onForwardClick={this.onForwardClick}
-          isPlaying={isPlaying}
-        />
-        <Tracklist
-          tracks={tracks}
-          selectedTrack={tracks[selectedTrackId]}
-          onTrackClick={this.onTrackClick}
-        />
+        <div className="playerBackground">
+          <div className="overlay" />
+          <div
+            className="backgroundImage"
+            style={{
+              backgroundImage: `url(${selectedTrack.imageUrl})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              filter: 'blur(20px)'
+            }}
+          />
+        </div>
+        <div className="playerMain">
+          <Playback track={selectedTrack} />
+          <Controls
+            onPlayPauseClick={this.onPlayPauseClick}
+            onBackClick={this.onBackClick}
+            onForwardClick={this.onForwardClick}
+            isPlaying={isPlaying}
+          />
+          <Tracklist
+            tracks={tracks}
+            selectedTrack={selectedTrack}
+            onTrackClick={this.onTrackClick}
+          />
+        </div>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React, { StatelessComponent, Props } from 'react';
 import { Media } from 'src/types/media';
+import './style.scss';
 
 interface PlaybackProps extends Props<void> {
   track: Media;

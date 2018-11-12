@@ -1,0 +1,25 @@
+.track {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 5px;
+  align-items: center;
+  padding: 10px;
+  min-height: 50px;
+
+  &.isSelected {
+    color: white;
+  }
+
+  .title {
+    flex: 1;
+  }
+
+  .mediaArt {
+    justify-self: end;
+    width: 50px;
+
+    img {
+      width: 100%;
+    }
+  }
+}
