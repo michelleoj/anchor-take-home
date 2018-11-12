@@ -36,4 +36,12 @@
     padding: 20px;
     z-index: 2;
   }
+
+  .selectedTitle {
+    margin: 20px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 300px;
+  }
 }

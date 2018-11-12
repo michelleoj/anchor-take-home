@@ -12,6 +12,11 @@ class Player extends Component {
     selectedTrackId: null
   };
 
+  public videoEl: HTMLMediaElement;
+  public audioEl: HTMLMediaElement;
+  public videoElRefGetter = videoRef => (this.videoEl = videoRef);
+  public audioElRefGetter = audioRef => (this.audioEl = audioRef);
+
   public fetchMedia = () => {
     return fetch(
       'https://s3-us-west-2.amazonaws.com/anchor-website/challenges/bsb.json'
@@ -37,28 +42,60 @@ class Player extends Component {
       });
   }
 
+  public componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      this.togglePlayBack(
+        prevState.selectedTrackId !== this.state.selectedTrackId
+      );
+    }
+  }
+
+  public togglePlayBack = (isNewTrack = false) => {
+    const { tracks, selectedTrackId, isPlaying } = this.state;
+    const selectedTrack = tracks[selectedTrackId];
+    const mediaEl =
+      selectedTrack.type === 'video' ? this.videoEl : this.audioEl;
+
+    // if changed track reset media since we're using the same audio tag
+    if (isNewTrack) {
+      mediaEl.src = selectedTrack.mediaUrl;
+      mediaEl.load();
+    }
+
+    if (isPlaying) {
+      mediaEl.play().catch(() => {
+        this.setState({ isPlaying: false });
+      });
+    } else {
+      mediaEl.pause();
+    }
+  };
+
+  public onMediaEnded = () => {
+    this.onForwardClick();
+  };
+
   public onTrackClick = track => {
     this.setState({
-      selectedTrackId: track.id
+      selectedTrackId: track.id,
+      isPlaying: true
     });
   };
 
   public onPlayPauseClick = () => {
-    console.log('playing or pausing!');
     this.setState({
       isPlaying: !this.state.isPlaying
     });
   };
 
   public onBackClick = () => {
-    console.log('back!');
     this.setState({
       selectedTrackId: this.getSelectedIndex(this.state.selectedTrackId - 1)
     });
   };
 
   public onForwardClick = () => {
-    console.log('forward!');
+    console.log('now moving forward');
     this.setState({
       selectedTrackId: this.getSelectedIndex(this.state.selectedTrackId + 1)
     });
@@ -72,7 +109,6 @@ class Player extends Component {
   public render() {
     const { tracks, selectedTrackId, isPlaying } = this.state;
     const selectedTrack = tracks[selectedTrackId];
-    console.log(selectedTrack, selectedTrackId, tracks);
     return isEmpty(tracks) ? (
       <div className="loading">Loading...</div>
     ) : (
@@ -91,7 +127,13 @@ class Player extends Component {
           />
         </div>
         <div className="playerMain">
-          <Playback track={selectedTrack} />
+          <Playback
+            track={selectedTrack}
+            audioRef={this.audioElRefGetter}
+            videoRef={this.videoElRefGetter}
+            onMediaEnded={this.onMediaEnded}
+          />
+          <div className="selectedTitle">{selectedTrack.title}</div>
           <Controls
             onPlayPauseClick={this.onPlayPauseClick}
             onBackClick={this.onBackClick}

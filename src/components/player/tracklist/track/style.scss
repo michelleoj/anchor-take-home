@@ -5,13 +5,11 @@
   align-items: center;
   padding: 10px;
   min-height: 50px;
+  cursor: pointer;
 
   &.isSelected {
-    color: white;
-  }
-
-  .title {
-    flex: 1;
+    font-weight: bold;
+    font-style: italic;
   }
 
   .mediaArt {
