@@ -6,10 +6,17 @@
   padding: 10px;
   min-height: 50px;
   cursor: pointer;
+  margin: 10px 0;
 
   &.isSelected {
     font-weight: bold;
     font-style: italic;
+  }
+
+  .title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .mediaArt {

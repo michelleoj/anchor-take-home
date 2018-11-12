@@ -95,7 +95,6 @@ class Player extends Component {
   };
 
   public onForwardClick = () => {
-    console.log('now moving forward');
     this.setState({
       selectedTrackId: this.getSelectedIndex(this.state.selectedTrackId + 1)
     });
